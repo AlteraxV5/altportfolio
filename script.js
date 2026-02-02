@@ -1,10 +1,3 @@
-
-/* ============================================
-   ALT PORTFOLIO - JAVASCRIPT
-   Galaxy Effects & Interactions
-   ============================================ */
-
-// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
     initGalaxyBackground();
@@ -17,9 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initParticleEffects();
 });
 
-/* ============================================
-   GALAXY BACKGROUND
-   ============================================ */
 function initGalaxyBackground() {
     const canvas = document.getElementById('galaxy-canvas');
     if (!canvas) return;
@@ -28,14 +18,12 @@ function initGalaxyBackground() {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
     
-    // Galaxy settings
     const stars = [];
     const nebulaClouds = [];
     const shootingStars = [];
     const starCount = 300;
     const nebulaCount = 5;
     
-    // Resize handler
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
@@ -43,7 +31,6 @@ function initGalaxyBackground() {
         initNebula();
     });
     
-    // Star class
     class Star {
         constructor() {
             this.reset();
@@ -79,7 +66,6 @@ function initGalaxyBackground() {
             ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
             ctx.fill();
             
-            // Add glow effect for larger stars
             if (this.size > 1.5) {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
@@ -95,7 +81,6 @@ function initGalaxyBackground() {
         }
     }
     
-    // Nebula Cloud class
     class NebulaCloud {
         constructor() {
             this.reset();
@@ -113,11 +98,11 @@ function initGalaxyBackground() {
         
         getRandomColor() {
             const colors = [
-                '124, 58, 237',  // Purple
-                '6, 182, 212',   // Cyan
-                '244, 114, 182', // Pink
-                '99, 102, 241',  // Indigo
-                '45, 212, 191',  // Teal
+                '124, 58, 237',  
+                '6, 182, 212',   
+                '244, 114, 182', 
+                '99, 102, 241', 
+                '45, 212, 191',  
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
@@ -148,7 +133,6 @@ function initGalaxyBackground() {
         }
     }
     
-    // Shooting Star class
     class ShootingStar {
         constructor() {
             this.reset();
@@ -200,7 +184,7 @@ function initGalaxyBackground() {
             ctx.lineWidth = 2;
             ctx.stroke();
             
-            // Star head
+
             ctx.beginPath();
             ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
@@ -208,7 +192,6 @@ function initGalaxyBackground() {
         }
     }
     
-    // Initialize stars and nebula
     function initStars() {
         stars.length = 0;
         for (let i = 0; i < starCount; i++) {
@@ -232,24 +215,20 @@ function initGalaxyBackground() {
     initStars();
     initNebula();
     initShootingStars();
-    
-    // Animation loop
+
     function animate() {
         ctx.clearRect(0, 0, width, height);
-        
-        // Draw nebula clouds (background)
+ 
         nebulaClouds.forEach(cloud => {
             cloud.update();
             cloud.draw();
         });
         
-        // Draw stars
         stars.forEach(star => {
             star.update();
             star.draw();
         });
         
-        // Draw shooting stars
         shootingStars.forEach(star => {
             star.update();
             star.draw();
@@ -261,9 +240,6 @@ function initGalaxyBackground() {
     animate();
 }
 
-/* ============================================
-   NAVBAR SCROLL EFFECT
-   ============================================ */
 function initNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
@@ -277,9 +253,6 @@ function initNavbarScroll() {
     });
 }
 
-/* ============================================
-   MOBILE MENU
-   ============================================ */
 function initMobileMenu() {
     const navToggle = document.querySelector('.nav-toggle');
     const mobileMenu = document.querySelector('.mobile-menu');
@@ -292,7 +265,6 @@ function initMobileMenu() {
         navToggle.classList.toggle('active');
     });
     
-    // Close menu when clicking a link
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
@@ -301,16 +273,12 @@ function initMobileMenu() {
     });
 }
 
-/* ============================================
-   SMOOTH SCROLL
-   ============================================ */
 function initSmoothScroll() {
     const links = document.querySelectorAll('a[href^="#"]');
     
     links.forEach(link => {
         link.addEventListener('click', (e) => {
             const targetId = link.getAttribute('href');
-            // Only prevent default and scroll for actual section links
             if (targetId && targetId.startsWith('#') && targetId !== '#') {
                 e.preventDefault();
                 const targetElement = document.querySelector(targetId);
@@ -329,15 +297,11 @@ function initSmoothScroll() {
     });
 }
 
-/* ============================================
-   SCROLL ANIMATIONS
-   ============================================ */
 function initScrollAnimations() {
     const fadeElements = document.querySelectorAll(
         '.skill-category, .project-card, .section-header, .about-content, .contact-content'
     );
     
-    // Add fade-in class
     fadeElements.forEach(el => {
         el.classList.add('fade-in');
     });
@@ -358,9 +322,6 @@ function initScrollAnimations() {
     });
 }
 
-/* ============================================
-   SKILL BARS ANIMATION
-   ============================================ */
 function initSkillBars() {
     const skillCards = document.querySelectorAll('.skill-card');
     
@@ -387,60 +348,63 @@ function initSkillBars() {
     });
 }
 
-/* ============================================
-   CONTACT FORM
-   ============================================ */
 function initContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) return;
     
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Get form data
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         
-        // Simple validation
         if (!data.name || !data.email || !data.subject || !data.message) {
             showNotification('Mohon lengkapi semua field!', 'error');
             return;
         }
-        
-        // Simulate form submission
+
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<span>Mengirim...</span>';
         submitBtn.disabled = true;
         
-        setTimeout(() => {
-            showNotification('Pesan berhasil dikirim! ✅', 'success');
-            form.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                showNotification('Pesan berhasil dikirim!', 'success');
+                form.reset();
+            } else {
+                showNotification('Gagal mengirim pesan. Coba lagi!', 'error');
+            }
+        } catch (error) {
+            form.submit();
+        }
+        
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
     });
 }
 
-/* ============================================
-   NOTIFICATION SYSTEM
-   ============================================ */
 function showNotification(message, type = 'success') {
-    // Remove existing notification
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
         existingNotification.remove();
     }
     
-    // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
         <span>${message}</span>
         <button class="notification-close">&times;</button>
     `;
-    
-    // Add styles
+
     Object.assign(notification.style, {
         position: 'fixed',
         top: '100px',
@@ -458,8 +422,7 @@ function showNotification(message, type = 'success') {
         fontSize: '1rem',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
     });
-    
-    // Add animation keyframes if not exists
+
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
@@ -487,17 +450,14 @@ function showNotification(message, type = 'success') {
         `;
         document.head.appendChild(style);
     }
-    
-    // Add to document
+
     document.body.appendChild(notification);
-    
-    // Close button event
+
     notification.querySelector('.notification-close').addEventListener('click', () => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     });
     
-    // Auto remove after 5 seconds
     setTimeout(() => {
         if (notification.parentElement) {
             notification.style.animation = 'slideOut 0.3s ease';
@@ -506,9 +466,6 @@ function showNotification(message, type = 'success') {
     }, 5000);
 }
 
-/* ============================================
-   PARTICLE EFFECTS ON HOVER
-   ============================================ */
 function initParticleEffects() {
     const interactiveElements = document.querySelectorAll('.btn, .project-card, .skill-card');
     
@@ -565,9 +522,6 @@ function createParticles(e) {
     }
 }
 
-/* ============================================
-   ACTIVE NAVIGATION HIGHLIGHT
-   ============================================ */
 function initActiveNavHighlight() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
@@ -593,12 +547,8 @@ function initActiveNavHighlight() {
     });
 }
 
-// Initialize active nav highlight
 initActiveNavHighlight();
 
-/* ============================================
-   PRELOADER (Optional)
-   ============================================ */
 function initPreloader() {
     const preloader = document.querySelector('.preloader');
     if (!preloader) return;
@@ -611,6 +561,3 @@ function initPreloader() {
         }, 300);
     });
 }
-
-// Uncomment if you want preloader
-// initPreloader();
