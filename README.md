@@ -2,7 +2,7 @@
 
 Website portfolio personal untuk **AltOffx / AltOfficialID** - Fullstack Developer yang passion dalam backend development dan web development.
 
-![Portfolio Preview](preview.png)
+![Portfolio Preview](https://files.catbox.moe/rseox2.png)
 
 ## ✨ Features
 
