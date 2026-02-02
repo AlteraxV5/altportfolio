@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all components
     initGalaxyBackground();
     initNavbarScroll();
     initMobileMenu();
@@ -369,7 +368,6 @@ function initContactForm() {
         submitBtn.disabled = true;
         
         try {
-            // Try AJAX submission first
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -379,7 +377,7 @@ function initContactForm() {
             });
             
             if (response.ok) {
-                showNotification('✅ Pesan berhasil dikirim ke altoffx.dev@gmail.com!', 'success');
+                showNotification('✅ Pesan berhasil dikirim ke Owner!', 'success');
                 form.reset();
                 console.log('Form submission successful');
             } else if (response.status === 429) {
@@ -389,13 +387,11 @@ function initContactForm() {
                 showNotification('Cek konfigurasi Formsubmit.co!', 'error');
                 console.log('Bad request - check Formsubmit.co configuration');
             } else {
-                // Fallback ke form submission biasa
                 console.log('AJAX failed, trying regular submit');
                 form.submit();
             }
         } catch (error) {
             console.log('Fetch error:', error);
-            // Fallback ke form submission biasa
             try {
                 form.submit();
             } catch (submitError) {
