@@ -369,6 +369,7 @@ function initContactForm() {
         submitBtn.disabled = true;
         
         try {
+            // Try AJAX submission first
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -378,13 +379,28 @@ function initContactForm() {
             });
             
             if (response.ok) {
-                showNotification('Pesan berhasil dikirim!', 'success');
+                showNotification('✅ Pesan berhasil dikirim ke altoffx.dev@gmail.com!', 'success');
                 form.reset();
+                console.log('Form submission successful');
+            } else if (response.status === 429) {
+                showNotification('Terlalu banyak pesan. Tunggu sebentar!', 'error');
+                console.log('Rate limit exceeded');
+            } else if (response.status === 400) {
+                showNotification('Cek konfigurasi Formsubmit.co!', 'error');
+                console.log('Bad request - check Formsubmit.co configuration');
             } else {
-                showNotification('Gagal mengirim pesan. Coba lagi!', 'error');
+                // Fallback ke form submission biasa
+                console.log('AJAX failed, trying regular submit');
+                form.submit();
             }
         } catch (error) {
-            form.submit();
+            console.log('Fetch error:', error);
+            // Fallback ke form submission biasa
+            try {
+                form.submit();
+            } catch (submitError) {
+                showNotification('Gagal mengirim pesan. Coba lagi!', 'error');
+            }
         }
         
         submitBtn.innerHTML = originalText;
